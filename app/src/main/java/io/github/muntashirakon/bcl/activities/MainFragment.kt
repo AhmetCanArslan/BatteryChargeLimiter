@@ -16,6 +16,15 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import io.github.muntashirakon.bcl.*
+import io.github.muntashirakon.bcl.Constants.CHARGE_OFF_KEY
+import io.github.muntashirakon.bcl.Constants.CHARGE_ON_KEY
+import io.github.muntashirakon.bcl.Constants.DEFAULT_DISABLED
+import io.github.muntashirakon.bcl.Constants.DEFAULT_ENABLED
+import io.github.muntashirakon.bcl.Constants.DEFAULT_FILE
+import io.github.muntashirakon.bcl.Constants.FILE_KEY
+import io.github.muntashirakon.bcl.Constants.SAVED_DISABLED_DATA
+import io.github.muntashirakon.bcl.Constants.SAVED_ENABLED_DATA
+import io.github.muntashirakon.bcl.Utils.getSettings
 import io.github.muntashirakon.bcl.settings.PrefsFragment
 import java.lang.ref.WeakReference
 
@@ -33,6 +42,8 @@ class MainFragment: Fragment() {
     private val customThresholdEditView by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<EditText>(R.id.voltage_threshold) }
     private val currentThresholdTextView by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<TextView>(R.id.current_voltage_threshold) }
     private val defaultThresholdTextView by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<TextView>(R.id.default_voltage_threshold) }
+    private val enablePassThrough by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<SwitchMaterial>(R.id.pass_through) }
+    private val customWattThresholdEditView by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<EditText>(R.id.watt_threshold) }
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
     private lateinit var currentThreshold: String
     private val mHandler = MainHandler(this)
@@ -93,6 +104,17 @@ class MainFragment: Fragment() {
             handled
         }
 
+        customWattThresholdEditView?.setOnEditorActionListener { _, actionId, _ ->
+            var handled = false
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                hideKeybord()
+                customWattThresholdEditView!!.clearFocus()
+                handled = true
+                setStatusCTRLFileData()
+            }
+            handled
+        }
+
         Utils.getCurrentVoltageThresholdAsync(requireContext(), mHandler)
 
         currentThreshold = settings?.getString(Constants.DEFAULT_VOLTAGE_LIMIT, "4300")!!
@@ -110,6 +132,19 @@ class MainFragment: Fragment() {
             }
         }
 
+        customWattThresholdEditView?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                val newThreshold = customWattThresholdEditView?.text.toString()
+                Utils.stopService(requireContext())
+                settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, newThreshold)?.apply()
+                getSettings(requireContext())
+                    .edit().putString(FILE_KEY, DEFAULT_FILE)
+                    .putString(CHARGE_ON_KEY, newThreshold)
+                    .putString(CHARGE_OFF_KEY, DEFAULT_DISABLED).apply()
+                Utils.startServiceIfLimitEnabled(requireContext())
+            }
+        }
+
         val resetBatteryStatsButton = view.findViewById<Button>(R.id.reset_battery_stats)
 //        val autoResetSwitch = view.findViewById(R.id.auto_stats_reset) as CheckBox
 //        val notificationSound = view.findViewById(R.id.notification_sound) as CheckBox
@@ -123,6 +158,7 @@ class MainFragment: Fragment() {
         enableSwitch?.setOnCheckedChangeListener(switchListener)
         disableChargeSwitch?.setOnCheckedChangeListener(switchListener)
         limitByVoltageSwitch?.setOnCheckedChangeListener(switchListener)
+        enablePassThrough?.setOnCheckedChangeListener(switchListener)
         maxPicker?.setOnValueChangedListener { _, _, max ->
             Utils.setLimit(max, settings!!)
             maxText?.text = getString(R.string.limit, max)
@@ -220,6 +256,34 @@ class MainFragment: Fragment() {
                     enableSwitches(listOf(enableSwitch, disableChargeSwitch))
                 }
             }
+            R.id.pass_through -> {
+                if (isChecked) {
+                    Utils.changeState(requireContext(), Utils.PASS_THROUGH_OFF)
+                    Utils.stopService(requireContext())
+                    settings?.edit()?.putBoolean(Constants.PASS_THROUGH_ENABLED, true)?.apply()
+                    settings?.edit()?.putString(Constants.SAVED_PATH_DATA, DEFAULT_FILE)?.apply()
+                    settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, DEFAULT_DISABLED)?.apply()
+                    settings?.edit()?.putString(Constants.SAVED_DISABLED_DATA, DEFAULT_DISABLED)?.apply()
+                    getSettings(requireContext())
+                        .edit().putString(FILE_KEY, DEFAULT_FILE)
+                        .putString(CHARGE_ON_KEY, DEFAULT_DISABLED)
+                        .putString(CHARGE_OFF_KEY, DEFAULT_DISABLED).apply()
+
+                    Utils.startServiceIfLimitEnabled(requireContext())
+                    disableSwitches(listOf(enableSwitch, disableChargeSwitch, limitByVoltageSwitch))
+                    setStatusCTRLFileData()
+                } else {
+                    Utils.changeState(requireContext(), Utils.PASS_THROUGH_ON)
+                    settings?.edit()?.putBoolean(Constants.PASS_THROUGH_ENABLED, false)?.apply()
+                    settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, DEFAULT_ENABLED)?.apply()
+                    getSettings(requireContext())
+                        .edit().putString(FILE_KEY, DEFAULT_FILE)
+                        .putString(CHARGE_ON_KEY, DEFAULT_ENABLED)
+                        .putString(CHARGE_OFF_KEY, DEFAULT_DISABLED).apply()
+                    enableSwitches(listOf(enableSwitch, disableChargeSwitch, limitByVoltageSwitch))
+                    setStatusCTRLFileData()
+                }
+            }
         }
     }
 
@@ -307,6 +371,7 @@ class MainFragment: Fragment() {
         enableSwitch?.isChecked = settings?.getBoolean(Constants.CHARGE_LIMIT_ENABLED, false) == true
         disableChargeSwitch?.isChecked = settings?.getBoolean(Constants.DISABLE_CHARGE_NOW, false) == true
         limitByVoltageSwitch?.isChecked = settings?.getBoolean(Constants.LIMIT_BY_VOLTAGE, false) == true
+        enablePassThrough?.isChecked = settings?.getBoolean(Constants.PASS_THROUGH_ENABLED, false) == true
         val max = settings?.getInt(Constants.LIMIT, 80) ?: 80
         val min = settings?.getInt(Constants.MIN, max - 2) ?: (max - 2)
         maxPicker?.value = max

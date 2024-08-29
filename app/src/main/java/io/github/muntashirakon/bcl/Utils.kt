@@ -48,6 +48,9 @@ object Utils {
     const val CHARGE_ON = 0
     const val CHARGE_OFF = 1
 
+    const val PASS_THROUGH_ON = 0
+    const val PASS_THROUGH_OFF = 1
+
     // remember pending state change
     private var changePending: Long = 0
 

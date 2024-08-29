@@ -14,17 +14,20 @@ object Constants {
     const val CHARGE_ON_KEY = "charge_on"
     const val CHARGE_OFF_KEY = "charge_off"
 
-    const val DEFAULT_FILE = "/sys/class/power_supply/battery/charging_enabled"
-    const val DEFAULT_ENABLED = "1"
+    const val DEFAULT_FILE = "/sys/class/qcom-battery/scenario_fcc"
+    const val DEFAULT_ENABLED = "-1"
     const val DEFAULT_DISABLED = "0"
 
     const val LIMIT = "limit"
     const val MIN = "min"
     const val CHARGE_LIMIT_ENABLED = "enable"
+    const val PASS_THROUGH_ENABLED = "pass_through_enable"
     const val DISABLE_CHARGE_NOW = "disable_charge_now"
     const val NOTIFICATION_LIVE = "notificationLive"
     const val AUTO_RESET_STATS = "auto_reset_stats"
     const val NOTIFICATION_SOUND = "notificationSound"
+
+    const val PASS_THROUGH= "pass_through"
 
     const val LIMIT_BY_VOLTAGE = "limit_by_voltage"
     const val DEFAULT_VOLTAGE_LIMIT = "default_voltage_limit"

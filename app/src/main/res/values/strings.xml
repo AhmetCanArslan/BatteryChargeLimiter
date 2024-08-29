@@ -7,7 +7,9 @@
     <string name="about">About</string>
     <string name="disable_charge_now">Disable charge now</string>
     <string name="limit_by_voltage">Limit by voltage</string>
+    <string name="pass_through">Pass through mode</string>
     <string name="custom_voltage_threshold">Custom Voltage threshold</string>
+    <string name="custom_watt_threshold">Custom Charging threshold</string>
     <string name="enable">Enable charge limit</string>
     <string name="notify">Notify when limit is reached</string>
     <string name="limit">Limit charging to %1$d%%</string>
@@ -113,4 +115,6 @@
     </string>
     <string name="close">Close</string>
     <string name="voltage_threshold_title">Voltage Threshold (in mV or µV)</string>
+    <string name="watt_threshold_title">Charging Threshold (in mA)</string>
+    <string name="info">NOTE:\n\nDisable \"Enforce Charge Limit\"\n\nDetails:\n\nThe \"scenario_fcc\" node works with the ADSP firmware, specific to Nothing Phone 2. It limits the charging current (not the input current).\n\nThe unit is in mA.\n\nIt works with the system\'s limit, so even if you set a high value (e.g., 5000 mA), NothingOS can limit it to a lower value. Conversely, if you set a lower value than the system, your limit is used instead.\n\nIf you write \"0\", it effectively disables charging and work in power-passthrough mode.\nTo reset the value, write \"-1\".\n\nFrom the above\'s \"Configure Control Data\", if you write \"1000\" instead of \"-1\", it will limit the charging current to 5W.\n\nDo note that the voltage is assumed to be 5V. So if you write 3000 to scenario_fcc, it will charge at max of 15W no matter the charger\'s voltage. If the charger\'s voltage is 5V, it will pull up-to 3A. If the charger\'s voltage is 9V, it will pull up-to 1.67A.</string>
 </resources>
