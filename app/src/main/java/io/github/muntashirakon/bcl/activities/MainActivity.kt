@@ -1,5 +1,6 @@
 package io.github.muntashirakon.bcl.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -23,12 +24,16 @@ import io.github.muntashirakon.bcl.settings.CtrlFileHelper
 import io.github.muntashirakon.bcl.settings.PrefsFragment
 import io.github.muntashirakon.bcl.settings.SettingsActivity
 import java.util.*
-
+import android.os.Handler
+import android.os.Looper
 
 class MainActivity : AppCompatActivity() {
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
     private lateinit var prefs: SharedPreferences
+    private val handler = Handler(Looper.getMainLooper())
 
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = Utils.getPrefs(this)
         Utils.setTheme(this, true)
@@ -43,20 +48,25 @@ class MainActivity : AppCompatActivity() {
             showNoRootDialog()
             return
         }
+
         updateSettingsVersion()
         checkForControlFiles()
         whitelistIfFirstStart()
+
         // Load main fragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, MainFragment())
             .commit()
+
+
     }
 
     private fun showNoRootDialog() {
         MaterialAlertDialogBuilder(this@MainActivity)
             .setMessage(R.string.root_denied)
             .setCancelable(false)
-            .setPositiveButton(R.string.ok) { _, _ -> finish() }.show()
+            .setPositiveButton(R.string.ok) { _, _ -> finish() }
+            .show()
     }
 
     private fun checkForControlFiles() {
@@ -75,7 +85,8 @@ class MainActivity : AppCompatActivity() {
                     MaterialAlertDialogBuilder(this@MainActivity)
                         .setMessage(R.string.device_not_supported)
                         .setCancelable(false)
-                        .setPositiveButton(R.string.ok) { _, _ -> finish() }.show()
+                        .setPositiveButton(R.string.ok) { _, _ -> finish() }
+                        .show()
                 }
             }
         }
@@ -98,7 +109,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun whitelistIfFirstStart() {
         if (!prefs.getBoolean(getString(R.string.previously_started), false)) {
-            // whitelist App for Doze Mode
+            // Whitelist app for Doze Mode
             Shell.cmd("dumpsys deviceidle whitelist +${BuildConfig.APPLICATION_ID}").submit {
                 if (it.isSuccess) {
                     prefs.edit().putBoolean(getString(R.string.previously_started), true).apply()
@@ -124,9 +135,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         Utils.getPrefs(baseContext)
             .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
-        // technically not necessary, but it prevents inlining of this required field
-        // see end of https://developer.android.com/guide/topics/ui/settings.html#Listening
         preferenceChangeListener = null
+        handler.removeCallbacksAndMessages(null) // Clean up all callbacks in the handler
         super.onDestroy()
     }
 
@@ -150,6 +160,11 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(R.string.close, null)
             .show()
     }
+
+
+
+    @SuppressLint("DefaultLocale")
+
 
     companion object {
         private val TAG = MainActivity::class.java.simpleName

@@ -2,88 +2,120 @@
 <resources>
     <string name="action_settings">Ayarlar</string>
     <string name="source_code_title">Kaynak Kodu</string>
+    <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Kaynak Kodu</a></string>
+    <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA</a></string>
     <string name="about">Hakkında</string>
-    <string name="enable">Battery Charge Limit\'i Etkinleştir</string>
-    <string name="notify">Limit aşıldığında bildir</string>
-    <string name="limit">Şarj limiti: %1$d%%</string>
-    <string name="recharge_below">%1$d%% altında yeniden şarj et</string>
-    <string name="status">Durum: </string>
-    <string name="status_ctrl_data_label">Kontrol dosyası verileri</string>
-    <string name="experimental">DENEYSEL</string>
-    <string name="issues">BİLİNEN SORUNLAR</string>
-    <string name="auto_reset_stats">Pil istatistiklerini otomatik sıfırla</string>
-    <string name="reset_stats">Pil İstatistiklerini Sıfırla</string>
-    <string name="disable">Devre dışı bırak</string>
-    <string name="disable_temporarily">Geçici olarak devre dışı bırak</string>
-    <string name="dismiss">Devre dışı bırak</string>
+    <string name="disable_charge_now">Şarjı Durdur</string>
+    <string name="limit_by_voltage">Voltajla Limitle</string>
+    <string name="pass_through">Pass Through Mode</string>
+    <string name="custom_voltage_threshold">Özel Voltaj Eşiği</string>
+    <string name="custom_watt_threshold">Özel Watt Eşiği</string>
+    <string name="enable">Şarj Liminiti Aktifleştir</string>
+    <string name="notify">Limite ulaşınca bildir</string>
+    <string name="limit">Şarjı şu değerle sınırla %1$d%%</string>
+    <string name="recharge_below">Şu değer altında tekrar şarja başla %1$d%%</string>
+    <string name="status">Status: </string>
+    <string name="status_ctrl_data_label">Kontrol Dosya Bilgisi</string>
+    <string name="experimental">EXPERIMENTAL</string>
+    <string name="issues">KNOWN ISSUES</string>
+    <string name="auto_reset_stats">Batarya değerlerini otomatik olarak sıfırla</string>
+    <string name="reset_stats">Batarya değerlerini sıfırla</string>
+    <string name="disable">Devredışı Bırak</string>
+    <string name="disable_temporarily">Geçici Olarak Devredışı Bırak</string>
+    <string name="dismiss">İptal Et</string>
     <string name="open_app">Uygulamayı Aç</string>
-    <string name="file_data">(CTRL dosyası verileri burada görünecek)</string>
+    <string name="file_data">(CTRL dosya bilgisi burada gözükecek)</string>
 
-    <string name="previously_started">Daha Önce Başladı</string>
-    <string name="device_not_supported">Cihazınız desteklenmiyor (henüz)!</string>
-    <string name="ok">Tamam</string>
-    <string name="no_recharge">Otomatik yeniden şarj yok</string>
+    <string name="previously_started">Daha önceden başlatılmış</string>
+    <string name="device_not_supported">Cihazınız (henüz) desteklenmiyor!</string>
+    <string name="ok">OK</string>
+    <string name="no_recharge">Otomatik tekrar şarjı kapat</string>
 
     <string name="charging">ŞARJ OLUYOR</string>
-    <string name="discharging">BOŞALTILIYOR</string>
-    <string name="full">DOLU</string>
+    <string name="discharging">DEŞARJ OLUYOR</string>
+    <string name="full">TAM</string>
     <string name="not_charging">ŞARJ OLMUYOR</string>
-    <string name="unknown">BİLİNMİYOR</string>
+    <string name="unknown">BİLİNMEYEN</string>
 
-    <string name="please_wait">Lütfen bekleyin…</string>
-    <string name="maintaining_x_to_y">%1$d%% - %2$d%% arasında koruma</string>
-    <string name="maintaining_description">Cihaz çıkarıldığında, hizmeti devre dışı bırak</string>
-    <string name="waiting_until_x">%1$d%% seviyesine kadar şarj oluyor</string>
-    <string name="waiting_description">Limite ulaşıldığında pil şarjı durduracak</string>
-    <string name="battery_info_C">U: %1$.3f V, S: %2$.1f &#8451;</string>
-    <string name="battery_info_F">U: %1$.3f V, S: %2$.1f &#8457;</string>
+    <string name="please_wait">Lütfen Bekleyin</string>
+    <string name="maintaining_x_to_y">Şarj %1$d%% - %2$d%% değerleri arasında tutulacak</string>
+    <string name="maintaining_description">Eğer cihazınız prizden çıkmış gibi gözükürse, bunu kapatın</string>
+    <string name="waiting_until_x">%1$d%% değerine şarj ediliyor</string>
+    <string name="waiting_description">Limite ulaşınca şarj duracak</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
 
-    <string name="root_denied">Uygulamaya ROOT izni verilmedi veya cihaz rootlanmamış!</string>
-    <string name="stats_reset_success">Pil İstatistikleri Sıfırlandı</string>
+    <string name="root_denied">Root erişimi gerekli!</string>
+    <string name="stats_reset_success">Batarya değerleri başarıyla sıfırlandı.</string>
 
-    <string name="intent_handle_activity">Battery Charge Limit\'in Kullanılma Etkinliği</string>
-    <string name="intent_invalid">Sağlanan amaç geçersizdi.</string>
-    <string name="intent_limit_invalid">Sağlanan limit geçersizdi.</string>
-    <string name="intent_limit_accepted">Pil şarj limiti %1$d%% olarak değiştirildi.</string>
+    <string name="intent_handle_activity">Battery Charge Limit Etkinlik Yönetimi</string>
+    <string name="intent_invalid">Sağlanan değer geçersizdi</string>
+    <string name="intent_limit_invalid">Sağlanan değer geçersiz</string>
+    <string name="intent_limit_accepted">Şarj limiti şu değere güncellendi: %1$d%%.</string>
+    <string name="mime_battery_limit" translatable="false">text/x-battery-limit</string>
 
-    <string name="service_enabled"> Pil Limiti Hizmeti Etkin! </string>
-    <string name="service_disabled"> Pil Limiti Hizmeti Devre Dışı! </string>
+    <string name="service_enabled"> Battery Limit Service Devrede! </string>
+    <string name="service_disabled"> Battery Limit Service Devredışı! </string>
 
     <string name="main_settings">Ana Ayarlar</string>
-    <string name="set_control_file">Kontrol Dosyasını Ayarla</string>
-    <string name="select_control_file">Kontrol Dosyasını Seç</string>
-    <string name="show_temperature_fahrenheit">Sıcaklığı &#8457; Biçiminde Göster</string>
-    <string name="show_temperature_in_notification">Bildirimde Sıcaklığı Göster</string>
-    <string name="enforce_charge_limit">Şarj Limitini Zorla</string>
-    <string name="enforce_charge_limit_desc">Cihazı, durumu giderek artan bir gecikmeyle değiştirerek kontrol dosyasındaki değişiklikleri tanımak için zorlamayı dene</string>
-    <string name="always_write_cf">Her Zaman CTRL Dosyasına Yaz</string>
-    <string name="always_write_cf_desc">Her zaman yeni içeriği içeriyor olsa bile, kontrol dosyasının körü körüne üzerine yaz</string>
+    <string name="set_control_file">Control File Ayarla</string>
+    <string name="select_control_file">Control File Seç</string>
+    <string name="show_temperature_fahrenheit">Sıcaklık birimi &#8457;</string>
+    <string name="show_temperature_in_notification">Sıcaklığı Bildirimde Göster</string>
+    <string name="enforce_charge_limit">Şarj Liminiti Zorla</string>
+    <string name="enforce_charge_limit_desc">Kontrol dosyasındaki değişiklikleri cihazın tanımasını sağlamak için değeri giderek artan bir gecikme ile değiştirmeyi deneyin</string>
+    <string name="always_write_cf">Her zaman CTRL Dosyası Kullan</string>
+    <string name="always_write_cf_desc">Kontrol dosyasını körlemesine her zaman üzerine yaz, hatta dosya zaten yeni içeriği içeriyorsa bile</string>
+
     <string name="advanced_settings">Gelişmiş Ayarlar</string>
-    <string name="immediate_power_intent_handling">Her Zaman Güç Olaylarını Kullan</string>
-    <string name="immediate_power_intent_handling_desc">Güç değişiklikleri doğrudan kontrol dosyası değişikliklerinden sonra bile hemen tanınır.\nSadece battery_charging_enabled veya store_mode gibi desteklenen kontrol dosyaları için kullanın!</string>
+    <string name="immediate_power_intent_handling">Her Zaman Güç Olaylarını İşle</string>
+    <string name="immediate_power_intent_handling_desc">Güç değişiklikleri hemen tanınacaktır, hatta kontrol dosyası değişikliklerinden hemen sonra bile.\nYalnızca desteklenen kontrol dosyaları için kullanın, örneğin battery_charging_enabled veya store_mode!</string>
+    <string name="disable_auto_recharge"> Otomatik Şarjı Kapat</string>
+    <string name="disable_auto_recharge_desc">Deneysel: Bu seçeneği etkinleştirmek, limit aşıldığında bildirimi de gizler. Önemli: Bu seçeneği kaldırmadan önce devre dışı bırakın veya kaldırdıktan sonra yeniden başlatın.</string>
 
-    <string name="hide_toast_on_service_change">Hizmet Değişikliklerinde Uyarıyı Gizle</string>
+    <string name="hide_toast_on_service_change">Servis Değişikliklerinde Bildirimi Gizle</string>
 
-    <string name="control_file_settings">Kontrol Dosyası Verileri</string>
-    <string name="current_ctrl_data_title">Yapılandırılmış Dosya Verileri</string>
-    <string name="control_file_option_summary_on">Kullanıcı tanımlı CTRL dosyası verileri kullanılıyor</string>
-    <string name="control_file_option_summary_off">Öntanımlı CTRL dosyası kullanılıyor</string>
-    <string name="control_file_alert_title">Sadece Gelişmiş Kullanıcılar!</string>
-    <string name="control_file_alert_desc">UYARI: Ne değiştirmekte olduğunuz hakkında bilgi sahibi olmadan bu bölüme müdahale etmeniz, cihazınızda beklenmedik sorunlara neden olabilir. Cihazın yeniden başlatılması genellikle çok sayıda sorunu giderir, ancak bazıları kolayca düzeltilmeyebilir. DİKKATLE İLERLEYİN!</string>
+    <string name="control_file_settings">Kontrol Dosyası Verisi</string>
+    <string name="current_ctrl_data_title">Yapılandırılmış Dosya Verisi</string>
+    <string name="control_file_option_summary_on">Kullanıcı tarafından belirtilen CTRL dosya verisi kullanılıyor</string>
+    <string name="control_file_option_summary_off">Önceden tanımlanmış CTRL dosyası kullanılıyor</string>
+    <string name="control_file_alert_title">Yalnızca İleri Düzey Kullanıcılar İçin!</string>
+    <string name="control_file_alert_desc">UYARI: Bu bölümü değiştirmeden önce ne yaptığınızdan emin değilseniz, cihazınıza öngörülemeyen sorunlar çıkarabilirsiniz. Cihazın yeniden başlatılması çoğu sorunu çözer, ancak bazıları bu kadar kolay çözülemez. DİKKATLE DEVAM EDİN!</string>
     <string name="control_understand">Anladım</string>
-    <string name="control_file_heads_up_title">Kontrol Dosyası Bilgileri</string>
-    <string name="control_file_heads_up_desc">Sadece cihazınızda tespit edilen kontrol dosyaları mevcut olarak görünecektir. Bir kontrol dosyası tespit edilirse, ancak başka bir cihaz için kullanılması güvenli olmalıdır. Bu listeye eklenecek kontrol dosyası verileriyle bir sorun açın veya cihazınız için GitHub\'da bir çekme isteği gönderin.</string>
+    <string name="control_file_heads_up_title">Kontrol Dosyası Bilgisi</string>
+    <string name="control_file_heads_up_desc">Cihazınızda tespit edilen yalnızca kontrol dosyaları kullanılabilir olarak görünecektir. Başka bir cihaz için bir kontrol dosyası tespit edilirse, kullanmak güvenli olmalıdır. Cihazınıza uygun kontrol dosyası verilerinin bu listeye eklenmesi için GitHub\'da bir sorun açın veya bir pull isteği gönderin.</string>
 
-    <string name="custom_ctrl_file_data_title">Yapılandırılabilir CTRL Dosyası Verileri</string>
-    <string name="custom_ctrl_file_data_setup_title">Kontrol Verilerini Yapılandır</string>
-    <string name="custom_ctrl_file_path_title">İstenilen Dosya İçin Yol Ayarla</string>
+    <string name="custom_ctrl_file_data_title">Yapılandırılabilir CTRL Dosya Verisi</string>
+    <string name="custom_ctrl_file_data_setup_title">Kontrol Verisini Yapılandır</string>
+    <string name="custom_ctrl_file_path_title">İstenen Dosyanın Yolunu Belirleyin</string>
     <string name="custom_ctrl_file_path_hint">/sys/folder/folder/desired_file</string>
-    <string name="custom_ctrl_file_enabled_title">Etkin Değeri Ayarla</string>
-    <string name="custom_ctrl_file_enabled_hint">1, enabled, desired_value</string>
-    <string name="custom_ctrl_file_disabled_title">Devre Dışı Değeri Ayarla</string>
-    <string name="custom_ctrl_file_disabled_hint">0, disabled, desired_value</string>
-    <string name="custom_ctrl_file_updated_info">Bilgileri güncelledikten sonra güncellenmiş veriler burada görünecektir</string>
-    <string name="custom_ctrl_file_heads_up">Uygulama çökmeleriyle ilgili sorunlar yaşarsanız veya hizmet düzgün çalışmazsa, ayarlardan her zaman CTRL dosyasına yazmayı etkinleştirmeyi deneyin. Bu yapılandırılabilir kontrol dosyası işlevinin tüm cihazları ve dosyaları/değerleri destekleyeceğine dair bir garanti YOKTUR. Sorun çıkarsa ayarları düzeltmeyi deneyin veya verilerin doğruluğundan emin olun.</string>
-    <string name="custom_ctrl_file_update_data">CTRL DOSYASI VERİLERİNİ GÜNCELLE</string>
+    <string name="custom_ctrl_file_enabled_title">Etkin Değer Ayarla</string>
+    <string name="custom_ctrl_file_enabled_hint">1, etkin, istenen_değer</string>
+    <string name="custom_ctrl_file_disabled_title">Devre Dışı Değer Ayarla</string>
+    <string name="custom_ctrl_file_disabled_hint">0, devre dışı, istenen_değer</string>
+    <string name="custom_ctrl_file_updated_info">Bilgileri güncelledikten sonra güncellenmiş veri burada görünecek</string>
+    <string name="custom_ctrl_file_heads_up">Uygulama çökmeleri veya servis düzgün çalışmıyorsa, ayarlardan Her Zaman CTRL Dosyası Yazma\'yı etkinleştirmeyi deneyin. Bu yapılandırılabilir kontrol dosyası işlevinin tüm cihazları ve dosyaları/değerleri destekleyeceği GARANTİ EDİLMEZ. Sorunlar meydana gelirse ayarları ayarlamayı deneyin veya verilerin doğru olduğundan emin olun.</string>
+    <string name="custom_ctrl_file_update_data">CTRL Dosya Verisini Güncelle</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Açık</string>
     <string name="dark">Koyu</string>
+    <string name="black">Siyah - AMOLED</string>
+    <string name="current_voltage_threshold">Mevcut Voltaj Eşiği</string>
+    <string name="default_voltage_threshold">Varsayılan Voltaj Eşiği</string>
+    <string name="control_battery_charge_permission_label">Pil şarjını kontrol et</string>
+    <string name="control_battery_charge_permission_description">pil şarjını kontrol et</string>
+    <string name="version">Sürüm</string>
+    <string name="app_author">© 2021—2022 <a href="https://github.com/MuntashirAkon">Muntashir Al-Islam</a></string>
+    <string name="license_title">Lisans</string>
+    <string name="credits_title">Katkıda Bulunanlar</string>
+    <string name="credits_details">Yazarlarına teşekkürler
+    \n- Android Açık Kaynak Projesi
+    \n- <a href="https://github.com/sriharshaarangi/BatteryChargeLimit">BatteryChargeLimit</a>
+</string>
+    <string name="close">Kapat</string>
+    <string name="voltage_threshold_title">Voltaj Eşiği (mV veya µV olarak)</string>
+    <string name="watt_threshold_title">Şarj Eşiği (mA olarak)</string>
+    <string name="warning">Dikkatli olun aşağıdaki değerler Arter veya Meteoric Kernele sahip NP2 kullanıcıları için geçerlidir</string>
+    <string name="info">NOT:\n\nŞarj Limitini Zorla Seçeneğini Devre Dışı Bırak\n\nDetaylar:\n\n"scenario_fcc" düğümü, Nothing Phone 2\'ye özgü ADSP yazılımıyla çalışır. Şarj akımını (giriş akımını değil) sınırlar.\n\nBirim mA\'dir.\n\nSistem limitleriyle birlikte çalışır, bu nedenle yüksek bir değer belirlerseniz (örneğin 5000 mA), NothingOS bunu daha düşük bir değere sınırlayabilir. Tersine, sistemden daha düşük bir değer belirlerseniz, sizin limitiniz kullanılır.\n\n"Eğer "0" yazarsanız, şarjı etkili bir şekilde devre dışı bırakır ve güç geçiş modunda çalışır.\nDeğeri sıfırlamak için "-1" yazın.\n\nYukarıdaki "Kontrol Verisini Yapılandır"dan, "-1" yerine "1000" yazarsanız, şarj akımını 5W ile sınırlandırır.\n\nVoltajın varsayılan olarak 5V olduğu unutulmamalıdır. Dolayısıyla, senaryo_fcc'ye 3000 yazarsanız, şarj cihazının voltajı ne olursa olsun maksimum 15W ile şarj olur. Şarj cihazının voltajı 5V ise, maksimum 3A çeker. Şarj cihazının voltajı 9V ise, maksimum 1.67A çeker.</string>
 </resources>

@@ -41,6 +41,8 @@
                 android:textSize="16sp"
                 tools:text="@string/charging" />
 
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,6 +51,16 @@
                 android:textSize="16sp"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 tools:text="(U: 4.214 V, T: 38 C)" />
+
+            <TextView
+                android:id="@+id/live_current_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="79dp"
+                android:layout_toEndOf="@+id/status"
+                android:textSize="16sp"
+                tools:text="@string/live_current_text" />
+
 
         </RelativeLayout>
 
@@ -84,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/limit_by_voltage"
+                android:visibility="gone"
                 android:textAppearance="?attr/textAppearanceTitleSmall" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -93,6 +106,9 @@
                 android:text="@string/disable_charge_now"
                 android:textAppearance="?attr/textAppearanceTitleSmall" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- Warning Text -->
+
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -194,11 +210,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/warning_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/warning"
+            android:textColor="@android:color/holo_red_dark"
+            android:padding="8dp"
+            android:visibility="visible"
+            android:textStyle="bold" />
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            app:contentPadding="16dp">
+            app:contentPadding="16dp"
+            android:visibility="gone">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -282,7 +310,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            app:contentPadding="16dp">
+            app:contentPadding="16dp"
+            >
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

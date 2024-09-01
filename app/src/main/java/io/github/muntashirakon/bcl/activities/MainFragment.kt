@@ -1,9 +1,11 @@
 package io.github.muntashirakon.bcl.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.*
 import android.content.pm.PackageManager
 import android.os.*
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.topjohnwu.superuser.internal.UiThreadHandler.handler
 import io.github.muntashirakon.bcl.*
 import io.github.muntashirakon.bcl.Constants.CHARGE_OFF_KEY
 import io.github.muntashirakon.bcl.Constants.CHARGE_ON_KEY
@@ -36,6 +39,7 @@ class MainFragment: Fragment() {
     private val settings by lazy(LazyThreadSafetyMode.NONE) { activity?.getSharedPreferences(Constants.SETTINGS, 0) }
     private val statusText by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<TextView>(R.id.status) }
     private val batteryInfo by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<TextView>(R.id.battery_info) }
+    private val liveCurrentTextView by lazy(LazyThreadSafetyMode.NONE) {view?.findViewById<TextView>(R.id.live_current_text)}
     private val enableSwitch by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<SwitchMaterial>(R.id.enable_switch) }
     private val disableChargeSwitch by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<SwitchMaterial>(R.id.disable_charge_switch) }
     private val limitByVoltageSwitch by lazy(LazyThreadSafetyMode.NONE) { view?.findViewById<SwitchMaterial>(R.id.limit_by_voltage) }
@@ -53,6 +57,7 @@ class MainFragment: Fragment() {
             Utils.startServiceIfLimitEnabled(requireContext())
         } else requireActivity().finishAndRemoveTask()
     }
+
 
     private class MainHandler(fragment: MainFragment) : Handler(Looper.getMainLooper()) {
         private val mFragment by lazy(LazyThreadSafetyMode.NONE) { WeakReference(fragment) }
@@ -78,6 +83,20 @@ class MainFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+    private fun updateLiveCurrent() {
+
+    }
+
+    @SuppressLint("DefaultLocale")
+    private fun getLiveCurrent(): String {
+        return try {
+            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "cat /sys/class/power_supply/battery/current_now"))
+            process.inputStream.bufferedReader().use { it.readLine() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "Cannot Read Current"
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Utils.applyWindowInsetsAsPaddingNoTop(view)
@@ -93,6 +112,7 @@ class MainFragment: Fragment() {
             }
         }
         prefs?.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
+
 
         customThresholdEditView?.setOnEditorActionListener { _, actionId, _ ->
             var handled = false
@@ -200,11 +220,24 @@ class MainFragment: Fragment() {
     override fun onStart() {
         super.onStart()
         context?.registerReceiver(charging, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-        // the limits could have been changed by an Intent, so update the UI here
+        // Update UI immediately
         updateUi()
+        // Start updating live current
+        handler.post(updateRunnable)
+    }
+    private val updateInterval: Long = 1000 // 1 saniye
+    private val handler = Handler(Looper.getMainLooper())
+    private val updateRunnable = object : Runnable {
+        @SuppressLint("SetTextI18n")
+        override fun run() {
+            val current = getLiveCurrent()
+            liveCurrentTextView?.text = "Current: $current"
+            handler.postDelayed(this, updateInterval)
+        }
     }
 
     override fun onStop() {
+        handler.removeCallbacks(updateRunnable)
         context?.unregisterReceiver(charging)
         super.onStop()
     }
@@ -322,6 +355,7 @@ class MainFragment: Fragment() {
         }
     }
 
+
     private fun updateBatteryInfo(intent: Intent) {
         batteryInfo?.text = String.format(
             " (%s)", Utils.getBatteryInfo(
@@ -367,6 +401,33 @@ class MainFragment: Fragment() {
         )
     }
 
+//    private fun updateUi() {
+//        enableSwitch?.isChecked =
+//            settings?.getBoolean(Constants.CHARGE_LIMIT_ENABLED, false) == true
+//        disableChargeSwitch?.isChecked =
+//            settings?.getBoolean(Constants.DISABLE_CHARGE_NOW, false) == true
+//        limitByVoltageSwitch?.isChecked =
+//            settings?.getBoolean(Constants.LIMIT_BY_VOLTAGE, false) == true
+//        enablePassThrough?.isChecked =
+//            settings?.getBoolean(Constants.PASS_THROUGH_ENABLED, false) == true
+//        val max = settings?.getInt(Constants.LIMIT, 80) ?: 80
+//        val min = settings?.getInt(Constants.MIN, max - 2) ?: (max - 2)
+//        maxPicker?.value = max
+//        maxText?.text = getString(R.string.limit, max)
+//        minPicker?.maxValue = max
+//        minPicker?.value = min
+//        updateMinText(min)
+//
+//        val updateInterval: Long = 1000 // Update every second
+//        handler.postDelayed(object : Runnable {
+//            @SuppressLint("SetTextI18n")
+//            override fun run() {
+//                val current = getLiveCurrent()
+//                liveCurrentTextView?.text = "Current: $current"
+//                handler.postDelayed(this, updateInterval)
+//            }
+//        }, updateInterval)
+
     private fun updateUi() {
         enableSwitch?.isChecked = settings?.getBoolean(Constants.CHARGE_LIMIT_ENABLED, false) == true
         disableChargeSwitch?.isChecked = settings?.getBoolean(Constants.DISABLE_CHARGE_NOW, false) == true
@@ -379,5 +440,20 @@ class MainFragment: Fragment() {
         minPicker?.maxValue = max
         minPicker?.value = min
         updateMinText(min)
+
+        // Start updating the live current when the UI is updated
+        startUpdatingLiveCurrent()
     }
+    private fun startUpdatingLiveCurrent() {
+        val updateInterval: Long = 1000 // Update every second
+        handler.post(object : Runnable {
+            @SuppressLint("SetTextI18n")
+            override fun run() {
+                val current = getLiveCurrent()
+                liveCurrentTextView?.text = "Current: $current"
+                handler.postDelayed(this, updateInterval)
+            }
+        })
+    }
+
 }
