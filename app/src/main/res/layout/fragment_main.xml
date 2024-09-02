@@ -16,53 +16,72 @@
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp">
-
-        <!-- TODO: add live current-->
-        <RelativeLayout
+        <TextView
+            android:id="@+id/warning_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/warning"
+            android:textColor="@android:color/holo_red_dark"
+            android:padding="8dp"
+            android:visibility="visible"
+            android:textStyle="bold" />
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp">
+            android:layout_weight="1"
+            android:hint="@string/custom_watt_threshold"
+            android:paddingBottom="30dp">
+
+            <io.github.muntashirakon.bcl.CustomEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/watt_threshold"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:imeOptions="actionGo"
+                android:padding="10dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- TODO: add live current-->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="5"
+            android:rowCount="4"
+            android:padding="16dp">
+
 
             <TextView
-                android:id="@+id/status_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:text="@string/status"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/status"
-                android:layout_toEndOf="@+id/status_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
                 android:textSize="16sp"
                 tools:text="@string/charging" />
 
-
-
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/battery_info"
-                android:layout_below="@+id/status"
-                android:textSize="16sp"
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="4"
                 android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="16sp"
                 tools:text="(U: 4.214 V, T: 38 C)" />
 
             <TextView
                 android:id="@+id/live_current_text"
-                android:layout_width="wrap_content"
+                android:layout_width="156dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="79dp"
-                android:layout_toEndOf="@+id/status"
+                android:layout_row="1"
+                android:layout_column="0"
                 android:textSize="16sp"
                 tools:text="@string/live_current_text" />
+        </GridLayout>
 
-
-        </RelativeLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -96,7 +115,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/limit_by_voltage"
-                android:visibility="gone"
                 android:textAppearance="?attr/textAppearanceTitleSmall" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -105,16 +123,88 @@
                 android:layout_height="wrap_content"
                 android:text="@string/disable_charge_now"
                 android:textAppearance="?attr/textAppearanceTitleSmall" />
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/pass_through"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pass_through"
+                android:textAppearance="?attr/textAppearanceTitleSmall" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/set1000mah"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/set1000mah"
+                    android:textAppearance="?attr/textAppearanceTitleSmall"
+                    app:cornerRadius="4dp"
+                    android:layout_marginEnd="8dp"
+                    style="@style/Widget.MaterialComponents.Button"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/set500mah"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/set500mah"
+                    android:textAppearance="?attr/textAppearanceTitleSmall"
+                    app:cornerRadius="4dp"
+                    style="@style/Widget.MaterialComponents.Button"
+                    />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reset_ctrl"
+                    android:layout_width="1dp"
+                    android:layout_marginStart="8dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/reset_ctrl"
+                    android:textAppearance="?attr/textAppearanceTitleSmall"
+                    app:cornerRadius="4dp"
+                    style="@style/Widget.MaterialComponents.Button"
+                    />
+            </LinearLayout>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <!-- Warning Text -->
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/battery_info"
+            android:hint="@string/status_ctrl_data_label">
+
+            <io.github.muntashirakon.bcl.TextInputTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/status_ctrl_data"
+                android:textIsSelectable="true"
+                android:text="@string/file_data"
+                android:padding="10dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             app:contentPadding="16dp">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/watt_threshold_title"
+                android:textColor="?attr/colorAccent"
+                android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -180,7 +270,6 @@
                             tools:text="Recharge below 75%" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="wrap_content"
@@ -190,175 +279,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/lin_spinners"
                     android:layout_marginTop="6dp" />
-
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/battery_info"
-            android:hint="@string/status_ctrl_data_label">
-
-            <io.github.muntashirakon.bcl.TextInputTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/status_ctrl_data"
-                android:textIsSelectable="true"
-                android:text="@string/file_data"
-                android:padding="10dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/warning_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/warning"
-            android:textColor="@android:color/holo_red_dark"
-            android:padding="8dp"
-            android:visibility="visible"
-            android:textStyle="bold" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            app:contentPadding="16dp"
-            android:visibility="gone">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/voltage_threshold_title"
-                    android:textColor="?attr/colorAccent"
-                    android:textAppearance="?attr/textAppearanceTitleSmall" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/current_voltage_threshold">
-
-                        <io.github.muntashirakon.bcl.TextInputTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/current_voltage_threshold"
-                            android:inputType="numberDecimal"
-                            android:maxLines="1"
-                            android:textIsSelectable="true"
-                            android:padding="10dp" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Space
-                        android:layout_width="8dp"
-                        android:layout_height="wrap_content" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/default_voltage_threshold">
-
-                        <io.github.muntashirakon.bcl.TextInputTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/default_voltage_threshold"
-                            android:inputType="numberDecimal"
-                            android:maxLines="1"
-                            android:textIsSelectable="true"
-                            android:padding="10dp" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/text_input_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/custom_voltage_threshold">
-
-                    <io.github.muntashirakon.bcl.CustomEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/voltage_threshold"
-                        android:inputType="numberDecimal"
-                        android:maxLines="1"
-                        android:imeOptions="actionGo"
-                        android:padding="10dp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            app:contentPadding="16dp"
-            >
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/pass_through"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pass_through"
-                android:textAppearance="?attr/textAppearanceTitleSmall" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/watt_threshold_title"
-                android:textColor="?attr/colorAccent"
-                android:textAppearance="?attr/textAppearanceTitleSmall" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/custom_watt_threshold"
-                android:paddingBottom="30dp">
-
-                <io.github.muntashirakon.bcl.CustomEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/watt_threshold"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
-                    android:imeOptions="actionGo"
-                    android:padding="10dp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/info"
-                android:textColor="?attr/colorAccent"
-                android:textAppearance="?attr/textAppearanceTitleSmall" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-        </com.google.android.material.card.MaterialCardView>
-
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>

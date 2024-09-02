@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragment_container, MainFragment())
             .commit()
 
-
     }
 
     private fun showNoRootDialog() {
