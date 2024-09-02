@@ -1,5 +1,28 @@
-# Battery Charge Limiter (BCL)
+# Battery Charge Limiter (BCL) FORK
 
+This fork specially designed for **NOTHING PHONE 2 (PONG)** using **Arter** Kernel
+
+
+### Changes That I Made 
+- Live Current Monitor on Homescreen.
+- Passthrough mode
+- Changed UI for easier use (personal taste)
+- Added quick 500 and 1000 mA buttons on homescreen.
+- Added reset CTRL file button.
+- Set CTRL File default to /sys/class/qcom-battery/scenario_fcc
+- Turkish translation completed.
+
+### Notes
+- You have to press buttons twice (idk) for them to take effect.
+ - If they dont, unplug and plug the charger again.
+- You should disable **Enforce Charge Limit**
+- You dont have to change Control File Data.
+- If you want to revert back, just uninstall the app and reboot device.
+
+
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 A fork of **Battery Charge Limit** whose development has been stalled for some time.
 
 _This app is a work in progress. If a feature is not working, do not hesitate to file a report._
