@@ -200,38 +200,38 @@ class MainFragment: Fragment() {
         }
         val set500mahButton = view.findViewById<Button>(R.id.set500mah)
         set500mahButton.setOnClickListener {
+            val newThreshold = "500"
             Utils.stopService(requireContext())
-            settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, "500")?.apply()
+            settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, newThreshold)?.apply()
             getSettings(requireContext())
                 .edit().putString(FILE_KEY, DEFAULT_FILE)
-                .putString(CHARGE_ON_KEY, "500")
+                .putString(CHARGE_ON_KEY, newThreshold)
                 .putString(CHARGE_OFF_KEY, DEFAULT_DISABLED).apply()
-            Toast.makeText(requireContext(), "500 mA set as enabled value", Toast.LENGTH_SHORT).show()
-            setStatusCTRLFileData()
+            Utils.startServiceIfLimitEnabled(requireContext())
         }
 
         val set1000mahButton = view.findViewById<Button>(R.id.set1000mah)
         set1000mahButton.setOnClickListener {
-            settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, "1000")?.apply()
+            val newThreshold = "1000"
+            Utils.stopService(requireContext())
+            settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, newThreshold)?.apply()
             getSettings(requireContext())
                 .edit().putString(FILE_KEY, DEFAULT_FILE)
-                .putString(CHARGE_ON_KEY, "1000")
+                .putString(CHARGE_ON_KEY, newThreshold)
                 .putString(CHARGE_OFF_KEY, DEFAULT_DISABLED).apply()
-            Toast.makeText(requireContext(), "1000 mA set as enabled value", Toast.LENGTH_SHORT)
-                .show()
-            setStatusCTRLFileData()
+            Utils.startServiceIfLimitEnabled(requireContext())
         }
 
         val resetCtrlButton = view.findViewById<Button>(R.id.reset_ctrl)
         resetCtrlButton.setOnClickListener {
-            settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, DEFAULT_ENABLED)?.apply()
+            val newThreshold = "-1"
+            Utils.stopService(requireContext())
+            settings?.edit()?.putString(Constants.SAVED_ENABLED_DATA, newThreshold)?.apply()
             getSettings(requireContext())
                 .edit().putString(FILE_KEY, DEFAULT_FILE)
-                .putString(CHARGE_ON_KEY, DEFAULT_ENABLED)
+                .putString(CHARGE_ON_KEY, newThreshold)
                 .putString(CHARGE_OFF_KEY, DEFAULT_DISABLED).apply()
-            Toast.makeText(requireContext(), "Reset Value", Toast.LENGTH_SHORT)
-                .show()
-            setStatusCTRLFileData()
+            Utils.startServiceIfLimitEnabled(requireContext())
         }
     }
 
