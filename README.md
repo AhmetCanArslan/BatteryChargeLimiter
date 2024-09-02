@@ -10,11 +10,12 @@ This fork specially designed for **NOTHING PHONE 2 (PONG)** using **Arter** Kern
 - Added quick 500 and 1000 mA buttons on homescreen.
 - Added reset CTRL file button.
 - Set CTRL File default to /sys/class/qcom-battery/scenario_fcc
-- Turkish translation completed.
+- Disabled voltage switch.
 
 ### Notes
-- You have to press buttons twice (idk) for them to take effect.
+- You have to enable service to make app work (including buttons and custom threshold value area). If they dont, press twice (idk why but works)
  - If they dont, unplug and plug the charger again.
+- After enabling service, adjust the wheels to a charge limit value that you want.
 - You should disable **Enforce Charge Limit**
 - You dont have to change Control File Data.
 - If you want to revert back, just uninstall the app and reboot device.
